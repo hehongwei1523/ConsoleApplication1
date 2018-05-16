@@ -1237,7 +1237,35 @@ void RADIX_SORT(int zA[], int d)
 	}
 }
 
+/*
+桶排序
+BUCKET-SORT(A)
+  n = A.length
+  let B[0..n-1] be a new array
+  for i = 0 to n-1
+     make B[i] an empty list
+  for i = 1 to n
+     inser A[i] into list B[nA[i]]
+  for i = 0 to n-1
+     sort list B[i] with insertion sort
+concatenate the lists B[0],B[1],...,B[n-1] together in order
+*/
 
+void BUCKET_SORT(int A[], int length)
+{
+	int n = length;
+	int *B = malloc(sizeof(int) * n);
+	int i = 0;
+   
+	for (i = 0; i < n - 1; i++)
+	{
+		B[0] = NULL;
+	}
+	for (i = 1; i < n; i++)
+	{
+		//此处为将数组A的数据放入到数据B保存的链表中。 暂没实现链表
+	}
+}
 void quick_main(void)
 {
 	int A[] = { 2,8,7,1,3,5,6,4 };
@@ -1285,7 +1313,136 @@ void quick_main(void)
 	RADIX_SORT(A, 3);
 }
 
-void main()
+
+int findMaxandMin(int A[], int length)
 {
-	quick_main();
+	int min = 0, max = 0;
+
+	max = min = A[0];
+	for (int i = 1; i < length; i++)
+	{
+		if (A[i] > max)
+			max = A[i];
+		else if (A[i] < min)
+		{
+			min = A[i];
+		}
+	}
+
+	printf("max = %d , min = %d \n",max, min);
+
+	return 0;
+}
+
+//数组长度分为奇数和偶数两种情况
+void MinAndMax(int A[], int n) {
+	int lt, gt;
+	int i;
+	static int min = 0, max = 0;
+
+	if (n & 1) {
+		min = A[0];
+		max = A[0];
+		i = 1;
+	}
+	else {
+		min = A[0]<A[1] ? A[0] : A[1];
+		max = A[0] + A[1] - min;
+		i = 2;
+	}
+
+	for (; i < n; i += 2) {
+		if (A[i] < A[i + 1]) {
+			lt = A[i];
+			gt = A[i + 1];
+		}
+		else {
+			lt = A[i + 1];
+			gt = A[i];
+		}
+		if (min > lt) min = lt;
+		if (max < gt) max = gt;
+	}
+	printf("max = %d , min = %d \n", max, min);
+}
+
+/*
+9.2 期望为线性时间的选择算法
+
+返回数组A[p..r]中的第i小的元素
+*/
+int RANDOMIZED_SELECT(int A[], int p, int r, int i)
+{
+	if (p == r)
+	{
+		return A[p];
+	}
+
+	int q = RANDOMIZED_PARTITION(A, p, r);
+	int k = q - p + 1;
+	if (i == k)
+	{
+		return A[q];
+	}
+	else if (i < k)
+	{
+		return RANDOMIZED_SELECT(A, p, q - 1,i);
+	}
+	else 
+		return RANDOMIZED_SELECT(A, q + 1, r, i);
+}
+
+/*
+9.3  最坏情况为线性时间的选择算法
+*/
+#define MAXN 120
+int SELECT(int A[], int p, int r, int i) {
+	int M[MAXN / 5 + 2], m = 0; // M[]: store median, m: number of medians
+	int x, k, q;            // x: median of M[]
+	int j, n = 5;
+
+	if (p == r)
+		return A[p];
+
+	for (j = p; j <= r; j += 5) {
+		if (j + 4 > r) {
+			n = r - j + 1;
+		}
+		//InsertionSort(A + j - 1, n);    // Sort
+		insertion_sort(A + j - 1, n);
+		M[m++] = A[j + (n -1) / 2];      // then Add the median into M
+	}
+	x = SELECT(M, 1, m, (m + 1) / 2);
+	//q = PartitionX(A, p, r, x);
+	q = RANDOMIZED_SELECT(A, p, r, x);
+
+	k = q - p + 1;
+	if (i == k)
+		return x;
+	else if (i < k)
+		return SELECT(A, p, q - 1, i);
+	else
+		return SELECT(A, q + 1, r, i - k);
+}
+
+void sort_main()
+{
+	int A[] = {5,2,7,9,4,3,77,1};
+
+	//findMaxandMin(A, ARRAY_LEN(A));
+	//MinAndMax(A, ARRAY_LEN(A));
+
+	/*
+	int num = RANDOMIZED_SELECT(A, 0, ARRAY_LEN(A) - 1, 2);
+	printf("num = %d \n",num);
+	*/
+
+	printf("SELECT = %d \n", SELECT(A, 1, ARRAY_LEN(A) , 2));
+}
+
+void main3()
+{
+	//quick_main();
+
+	sort_main();
 }

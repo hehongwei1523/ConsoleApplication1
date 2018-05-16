@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 #include "stdio.h"
-void function(void)
+void printf_float_int(void)
 {
 	int a;
 	float b;
@@ -30,7 +30,7 @@ int FindMax(int *A, int low, int high)
 
 int main3z()
 {
-	//function();
+	//printf_float_int();
 
 	printf("run \n");
 
