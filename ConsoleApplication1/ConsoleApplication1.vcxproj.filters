@@ -56,5 +56,44 @@
     <ClCompile Include="TCP客服端.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="二叉搜索树.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="红黑树.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="动态规划.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSDN问题.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="堆排序.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="最长公共子队列.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="动态规划-整齐打印.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="二进制计数器.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="B树.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="啊哈！算法.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="POJ.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="深度搜索DFS.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LeetCode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

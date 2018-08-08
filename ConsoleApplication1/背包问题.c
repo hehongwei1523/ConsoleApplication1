@@ -93,11 +93,11 @@ void package_main(void)
 int bag01()
 {
 #define N 5
-#define V 50
+#define V 10
 
-	int c[N] = {1,2,3,4,5};
-	int w[N] = {2,3,4,5,6};
-	int f[N][V] = {0};
+	int c[N+1] = {0,2,2,6,5,4};
+	int w[N+1] = {0,6,3,5,4,6};
+	int f[N+1][V+1] = {0};
 
 	for (int i = 1; i <= N; i++)
 		f[i][0] = 0;
@@ -106,9 +106,9 @@ int bag01()
 	{
 		for (int j = 1; j <= V; j++)
 		{
-			if (j >= w[i])//背包容量够大
+			if (j >= c[i])//背包容量够大
 			{
-				f[i][j] = max(f[i - 1][j - w[i]] + c[i], f[i - 1][j]);
+				f[i][j] = max(f[i - 1][j - c[i]] + w[i], f[i - 1][j]);
 			}
 			else//背包容量不足
 			{
@@ -116,14 +116,53 @@ int bag01()
 			}
 		}
 	}
-	printf("%d \n",f[N][V]);
+	//printf("%d \n",f[N][V]);
+
+	
+	for (int i = 1; i <= N; i++)
+	{
+		printf(" \n");
+		for (int j = 1; j <= V; j++)
+		{
+			printf("%d  ", f[i][j]);
+		}
+	}
+	
 	return 0;
 }
 
-int main()
+void FindWhat(int i, int j)//寻找解的组成方式
+{
+	int v[N + 1] = { 0,2,2,6,5,4 };
+	int w[N + 1] = { 0,6,3,5,4,6 };
+
+	int * item = malloc(sizeof(int)*i);
+
+	int **V0 = (int **)malloc(sizeof(int) * i);
+	for (int k = 0; k < i; k++)
+	{
+		V0[k] = (int *)malloc(sizeof(int) * j);
+	}
+
+	if (i >= 0)
+	{
+		if (V0[i][j] == V0[i - 1][j])//相等说明没装
+		{
+			item[i] = 0;//全局变量，标记未被选中
+			FindWhat(i - 1, j);
+		}
+		else if (j - w[i] >= 0 && V0[i][j] == V0[i - 1][j - w[i]] + v[i])
+		{
+			item[i] = 1;//标记已被选中
+			FindWhat(i - 1, j - w[i]);//回到装包之前的位置
+		}
+	}
+}
+
+int main_b()
 {
 	//package_main();
-	bag01();
+	//bag01();
 
 	return 0;
 }

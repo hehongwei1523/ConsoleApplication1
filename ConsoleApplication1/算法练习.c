@@ -80,6 +80,30 @@ void function()
 
 }
 
+/*不用运算符实现阶乘算术*/
+typedef unsigned int(*fun)(unsigned int);
 
+unsigned int Solution3_Teminator(unsigned int n)
+{
+	return 0;
+}
 
+unsigned int Sum_Solution3(unsigned int n)
+{
+	static fun f[2] = { Solution3_Teminator, Sum_Solution3 };
+	return n + f[!!n](n - 1);
+}
+
+//printf("Sum_Solution3 = %d \n", Sum_Solution3(100));
+
+/*用位运算完成两数相加*/
+int plus(int a, int b)
+{
+	while (a != 0) {
+		int temp = (a & b) << 1;
+		b = a ^ b;
+		a = temp;
+	}
+	return b;
+}
 

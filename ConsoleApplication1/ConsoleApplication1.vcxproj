@@ -150,12 +150,25 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="B树.c" />
+    <ClCompile Include="CSDN问题.c" />
+    <ClCompile Include="LeetCode.c" />
+    <ClCompile Include="POJ.c" />
     <ClCompile Include="TCP客服端.c" />
+    <ClCompile Include="二叉搜索树.c" />
+    <ClCompile Include="二进制计数器.c" />
     <ClCompile Include="代码大全第18章.c" />
+    <ClCompile Include="动态规划-整齐打印.c" />
+    <ClCompile Include="动态规划.c" />
+    <ClCompile Include="啊哈！算法.c" />
+    <ClCompile Include="堆排序.c" />
+    <ClCompile Include="最长公共子队列.c" />
+    <ClCompile Include="深度搜索DFS.c" />
     <ClCompile Include="算法练习.c" />
     <ClCompile Include="数据结构.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="算法导论.c" />
+    <ClCompile Include="红黑树.c" />
     <ClCompile Include="背包问题.c" />
     <ClCompile Include="TCP服务器.c" />
     <ClCompile Include="素数矩阵.c" />

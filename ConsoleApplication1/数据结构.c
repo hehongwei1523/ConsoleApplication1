@@ -128,7 +128,35 @@ void LIST_SEARCH(List L, int k)
 	//int x = L.head;
 }
 
-int main6(void)
+//二叉查找树节点定义，带模板
+/*
+typedef struct _BinarySearchTreeNode
+{
+	T key;//节点值，这里只有一个关键元素值，没有附带数据（卫星数据）
+	BinarySearchTreeNode * parent;//指向双亲节点指针
+	BinarySearchTreeNode * left;//指向左孩子节点指针
+	BinarySearchTreeNode * right;//指向右孩子节点指针
+}BinarySearchTreeNode;
+
+int key[] = {};
+int TREE_SEARCH(int x, int k)
+{
+	if (x == NULL || k == key[x])
+	{
+		return x;
+	}
+	if (k < key[x])
+	{
+		return TREE_SEARCH(left[x], k);
+	}
+	else
+	{
+		return TREE_SEARCH(right[x], k);
+	}
+}
+*/
+
+int main_data(void)
 {
 	//stack_main();
 	list_main();
