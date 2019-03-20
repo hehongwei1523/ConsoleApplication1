@@ -5160,7 +5160,7 @@ void ID11()
 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
 请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
 */
-int lengthOfLongestSubstring(char* s) {
+int xlengthOfLongestSubstring(char* s) {
 
 	int s_long = strlen(s);
 	int i = 0, j = 0;
@@ -5175,7 +5175,7 @@ int lengthOfLongestSubstring(char* s) {
 	printf("%d \n", i);
 }
 
-void ID3()
+void xID3()
 {
 	char *s = "pwwkew";
 	lengthOfLongestSubstring(s);
@@ -6447,6 +6447,361 @@ void ID592()
 	fractionAddition(expression);
 }
 
+/*
+970. 强整数
+
+给定两个非负整数 x 和 y，如果某一整数等于 x^i + y^j，其中整数 i >= 0 且 j >= 0，那么我们认为该整数是一个强整数。
+返回值小于或等于 bound 的所有强整数组成的列表。
+你可以按任何顺序返回答案。在你的回答中，每个值最多出现一次。
+
+示例 1：
+输入：x = 2, y = 3, bound = 10
+输出：[2,3,4,5,7,9,10]
+解释：
+2 = 2^0 + 3^0
+3 = 2^1 + 3^0
+4 = 2^0 + 3^1
+5 = 2^1 + 3^1
+7 = 2^2 + 3^1
+9 = 2^3 + 3^0
+10 = 2^0 + 3^2
+
+示例 2：
+输入：x = 3, y = 5, bound = 15
+输出：[2,4,6,8,10,14]
+
+提示：
+1 <= x <= 100
+1 <= y <= 100
+0 <= bound <= 10^6
+
+* Return an array of size *returnSize.
+* Note: The returned array must be malloced, assume caller calls free().
+*/
+int* powerfulIntegers(int x, int y, int bound, int* returnSize) {
+
+	int xx[100] = { 1 }, yy[100] = { 1 }, rreturn[1000] = { 0 };
+	int i = 0, j = 0, k = 0, n = 1, m = 1;
+	int t = 1;
+	for (i = 0; i < bound; i++)
+	{
+		t = t * x;
+		xx[n++] = t;
+		if (t > bound) break;
+	}
+	t = 1;
+	for (j = 0; j < bound; j++)
+	{
+		t = t * y;
+		yy[m++] = t;
+		if (t > bound) break;
+	}
+	n--; m--;
+	//printf("i = %d, j = %d \n", i, j);
+	printf("n = %d, m = %d \n", n, m);
+	//n = i; m = j;
+
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < m; j++)
+		{
+			//printf("xx[%d] = %d, yy[%d] = %d \n", i, xx[i], j, yy[j]);
+			if (xx[i] + yy[j] <= bound)
+			{
+				printf("xx[%d] = %d, yy[%d] = %d, total = %d \n", i, xx[i], j, yy[j], xx[i] + yy[j]);
+				rreturn[k++] = xx[i] + yy[j];
+			}
+		}
+	}
+
+	for (i = 0; i < k; i++)
+	{
+		printf("%d ", rreturn[i]);
+	}
+}
+
+void ID970()
+{
+	int x = 2, y = 5;
+	int bound = 100000;
+	powerfulIntegers(x, y, bound, NULL);
+}
+
+
+int removeDuplicates(int* nums, int numsSize) {
+
+	int i = 0, j = 0, k = 0;
+	for (i = 0; i < numsSize-1; i++)
+	{
+		if (nums[i] == nums[i + 1])
+		{
+			nums[i] = -INT_MAX;
+		}
+	}
+
+	//for (i = 0; i < numsSize; i++) printf("[%d] = %d \n", i, nums[i]);
+
+	for (i = 0; i < numsSize; i++)
+	{
+		if (nums[i] == -INT_MAX)
+		{
+			j++;
+		}
+		if ((j > 0 || i == numsSize-1) && nums[i] != -INT_MAX)
+		{
+			nums[k++] = nums[i];
+			j = 0;
+		}
+		else
+		{
+			if (nums[i] != -INT_MAX)
+				nums[k++] = nums[i];
+		}
+	}
+
+	for (i = 0; i < k; i++) printf("[%d] = %d \n", i, nums[i]);
+}
+
+//官方解法：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/solution/
+void ID26()
+{
+	int nums[] =
+		//{1,1,2};
+		//{ 1,2,3,44,44 };
+		//{ 0,0,1,1,1,2,2,3,3,4 };
+		//{ 0, 0, 1, 1, 1, 2, 2, 3, 3, 4,4,5,5,5,5,6,7,7 };
+	{ -1,0,0,0,0,3,3 };
+	int numsSize = sizeof(nums) / sizeof(nums[0]);
+
+	removeDuplicates(nums, numsSize);
+
+	//测试
+	char str[32] = "hello"; char *pstr = str;
+	printf("%d %d\n", sizeof(pstr), sizeof(str));//一个是指针大小，一个是数组大小
+}
+
+/*
+1002. 查找常用字符
+
+给定仅有小写字母组成的字符串数组 A，返回列表中的每个字符串中都显示的全部字符（包括重复字符）组成的列表。
+例如，如果一个字符在每个字符串中出现 3 次，但不是 4 次，则需要在最终答案中包含该字符 3 次。
+
+示例 1：
+输入：["bella","label","roller"]
+输出：["e","l","l"]
+
+示例 2：
+输入：["cool","lock","cook"]
+输出：["c","o"]
+
+提示：
+1 <= A.length <= 100
+1 <= A[i].length <= 100
+A[i][j] 是小写字母
+*/
+
+/**
+* Return an array of size *returnSize.
+* Note: The returned array must be malloced, assume caller calls free().
+*/
+char** commonChars(char** A, int ASize, int* returnSize) {
+
+	char once[26] = { 0 }, all[26] = { 0 };
+
+}
+
+void ID1002()
+{
+
+}
+
+/*
+553. 最优除法
+
+给定一组正整数，相邻的整数之间将会进行浮点除法操作。例如， [2,3,4] -> 2 / 3 / 4 。
+但是，你可以在任意位置添加任意数目的括号，来改变算数的优先级。
+你需要找出怎么添加括号，才能得到最大的结果，并且返回相应的字符串格式的表达式。你的表达式不应该含有冗余的括号。
+
+示例：
+输入: [1000,100,10,2]
+输出: "1000/(100/10/2)"
+解释:
+1000/(100/10/2) = 1000/((100/10)/2) = 200
+但是，以下加粗的括号 "1000/((100/10)/2)" 是冗余的，
+因为他们并不影响操作的优先级，所以你需要返回 "1000/(100/10/2)"。
+
+其他用例:
+1000/(100/10)/2 = 50
+1000/(100/(10/2)) = 50
+1000/100/10/2 = 0.5
+1000/100/(10/2) = 2
+
+说明:
+输入数组的长度在 [1, 10] 之间。
+数组中每个元素的大小都在 [2, 1000] 之间。
+每个测试用例只有一个最优除法解。
+*/
+
+char* optimalDivision(int* nums, int numsSize) {
+	//解法：第一个数为分子，第二个之后累除即可
+}
+
+/*
+976. 三角形的最大周长
+
+给定由一些正数（代表长度）组成的数组 A，返回由其中三个长度组成的、面积不为零的三角形的最大周长。
+如果不能形成任何面积不为零的三角形，返回 0。
+
+示例 1：
+输入：[2,1,2]
+输出：5
+
+示例 2：
+输入：[1,2,1]
+输出：0
+
+示例 3：
+输入：[3,2,3,4]
+输出：10
+
+示例 4：
+输入：[3,6,2,3]
+输出：8
+
+提示：
+3 <= A.length <= 10000
+1 <= A[i] <= 10^6
+*/
+//超时算法。正确做法是，先排好序，从最大的部分开始判断
+int largestPerimeter(int* A, int ASize) {
+
+	int i = 0, j = 0, k = 0;
+	int max = 0;
+	int ii = 0, jj = 0, kk = 0;
+
+	for (i = 0; i < ASize; i++)
+	{
+		for (j = i + 1; j < ASize; j++)
+		{
+			for (k = j + 1; k < ASize; k++)
+			{
+				printf("%d %d %d\n", A[i], A[j], A[k]);
+				if ((A[i] + A[j] > A[k]) && (A[i] + A[k] > A[j]) && (A[k] + A[j] > A[i]))
+				{
+					int t = A[i] + A[j] + A[k];
+					if (t > max)
+					{
+						max = t;
+						ii = i; jj = j; kk = k;
+					}
+				}
+			}
+		}
+	}
+	printf("[%d,%d,%d] max = %d\n", A[ii],A[jj],A[kk],max);
+
+	return max;
+}
+
+void ID976()
+{
+	int A[] = 
+	//{ 3,6,2,3 };
+	{ 16,5,41,11,48,3,27,7,50,26,24,1,9,19,11,47,11,36,18,50,48,2,151,43,74,24,20,33,9,11,34,41,4,5,44,7,34,27,34,48,26,10,21,6,17,44,33,23,12,15,43,11,16,50,2,17,42,46,42,1,10,30,39,22,48,12,13,27,5,23,8,31,26,15,27,4,12,27,38,4,50,30,16,16,48,44,25,18,30,45,50,20,27,34,41,20,24,13,44,32,4}
+	;
+	int ASize = sizeof(A) / sizeof(A[0]);
+
+	largestPerimeter(A, ASize);
+}
+
+/*
+3. 无重复字符的最长子串
+
+给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+
+示例 1:
+输入: "abcabcbb"
+输出: 3
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+
+示例 2:
+输入: "bbbbb"
+输出: 1
+解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+
+示例 3:
+输入: "pwwkew"
+输出: 3
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+*/
+
+int lengthOfLongestSubstring(char* s) {
+
+	int s_long = strlen(s);
+	if (s_long < 1) return 0;
+	int i = 0, j = 0;
+	int ii = 0, jj = 0; 
+	int max = 0;
+
+	for (i = 0; i < s_long; i++)
+	{
+		int com[128] = { 0 }, k = 0, num = 0;//为了处理空字符情况
+		for (j = i; j < s_long; j++)
+		{
+			num = s[j];// -'a'; //为了处理空字符情况
+			com[num]++;
+			k++;
+			if (com[num] > 1) {
+				k--; break;
+			}
+		}
+		if (k > max)
+		{
+			printf("k = %d\n", k);
+			max = k;
+			ii = i;jj = j;
+		}
+	}
+
+	printf("i = %d, j = %d, max = %d\n", ii, jj, max);
+
+	for (int f = ii; f < jj; f++)
+		printf("%c", s[f]);
+}
+
+void ID3()
+{
+	char *s =
+		//"abcabcbb";
+		//"pwwkew";
+		//"bbbbb";
+		//"  ";
+		"alqebriavxoo";
+	lengthOfLongestSubstring(s);
+}
+
+/*
+991. 坏了的计算器
+
+在显示着数字的坏计算器上，我们可以执行以下两种操作：
+
+双倍（Double）：将显示屏上的数字乘 2；
+递减（Decrement）：将显示屏上的数字减 1 。
+
+最初，计算器显示数字 X。
+
+返回显示数字 Y 所需的最小操作数。
+*/
+int brokenCalc(int X, int Y) {
+
+}
+
+void ID991()
+{
+
+}
+
 int main(void)
 {
 	//printf("%s\n", decodeString("a"));
@@ -6538,7 +6893,11 @@ int main(void)
 	//ID423();
 	//softall();
 	//ID754();
-	ID592();
+	//ID592();
+	//ID970();
+	//ID26();
+	//ID976();
+	ID3();
 
 	return 0;
 }
